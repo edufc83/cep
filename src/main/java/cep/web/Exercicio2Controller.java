@@ -1,6 +1,5 @@
 package cep.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class Exercicio2Controller {
     @Autowired
     private Endereco2Repository endereco2Repository;
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Endereco2 inserirEndereco(@RequestBody Endereco2 endereco) {
         List<Endereco2> lista = endereco2Repository.consultarCepBD(endereco.getCep());
         Endereco2 result = null;
@@ -41,7 +40,7 @@ public class Exercicio2Controller {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public @ResponseBody Endereco2 alterarEndereco(@RequestBody Endereco2 endereco) {
         List<Endereco2> lista = endereco2Repository.consultarCepBD(endereco.getCep());
         Endereco2 result = null;
@@ -63,47 +62,15 @@ public class Exercicio2Controller {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public @ResponseBody List<Endereco2> deletarEndereco(@RequestBody Endereco2 endereco) {
-        List<Endereco2> result = endereco2Repository.consultarCepBD(endereco.getCep());
-
-        try {
-            if (result != null && result.size() > 0) {
-                if (endereco.getId() == null) {
-                    endereco.setId(result.get(0).getId());
-                }
-                endereco2Repository.excluir(endereco);
-                result = endereco2Repository.consultarCepBD(null);
-
-            } else {
-                result = null;
-                result = new ArrayList<Endereco2>();
-                result.add(new Endereco2(Util.MENSSAGEM_ENDERECO_NAO_ENCONTRADO));
-            }
-        } catch (Exception e) {
-            result = null;
-            result = new ArrayList<Endereco2>();
-            result.add(new Endereco2(Util.MENSSAGEM_ENDERECO_NAO_ENCONTRADO));
-        }
-
-        return result;
-
+    public  @ResponseBody Endereco2 deletarEndereco(@RequestParam(required = false) Integer id) {
+        endereco2Repository.excluir(id);          
+        return new Endereco2(Util.MENSSAGEM_EXCLUSAO_SUCESSO) ;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Endereco2> consultaEndereco(@RequestParam(required = false) String cep) {
         List<Endereco2> result = endereco2Repository.consultarCepBD(cep);
-        try {
-            if (result == null || result.size() <= 0) {
-                result = new ArrayList<Endereco2>();
-                result.add(new Endereco2(Util.MENSSAGEM_ENDERECO_NAO_ENCONTRADO));
-
-            }
-        } catch (Exception e) {
-            result = null;
-            result = new ArrayList<Endereco2>();
-            result.add(new Endereco2(Util.MENSSAGEM_ENDERECO_NAO_ENCONTRADO));
-        }
-
+       
         return result;
 
     }

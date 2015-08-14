@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -56,7 +57,10 @@ public class Endereco2RepositoryImpl implements Endereco2Repository {
         try {
             s = sessionFactory.openSession();
             if (StringUtils.isNotEmpty(cep)) {
-                enderecoList = s.createQuery(String.format("from Endereco2 where cep =%s ", cep)).list();
+                Query q = s.createQuery("from Endereco2 where cep = :cep ");
+                q.setParameter("cep", cep);
+                
+                enderecoList = q.list();
             } else {
                 enderecoList = s.createQuery("from Endereco2 ").list();
             }
@@ -85,7 +89,7 @@ public class Endereco2RepositoryImpl implements Endereco2Repository {
     }
 
     @Override
-    public void excluir(Endereco2 endereco) {
+    public void excluir(Integer id) {
         configureSessao();
         Session s = null;
         Transaction t = null;
@@ -93,8 +97,8 @@ public class Endereco2RepositoryImpl implements Endereco2Repository {
         try {
             s = sessionFactory.openSession();
             t = s.beginTransaction();
-
-            s.delete(endereco);
+           Endereco2 result =  (Endereco2) s.get(Endereco2.class, id);
+            s.delete(result);
             s.flush();
             t.commit();
 

@@ -21,6 +21,7 @@ public class Util {
     public static final String MENSSAGEM_ERRO_IN_ALT = "Não efetuar a Inclusão/Alteração";
 
     public static final String MENSSAGEM_ENDERECO_NAO_ENCONTRADO = "Endereço não foi Econtrado";
+    public static final String MENSSAGEM_EXCLUSAO_SUCESSO =  "Exclusão com sucesso";
     
 
     public static List<Endereco> getListaEnderecos() {

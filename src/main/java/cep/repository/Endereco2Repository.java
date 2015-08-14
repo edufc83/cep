@@ -11,6 +11,6 @@ public interface Endereco2Repository {
     public   List<Endereco2> consultarCepBD(String cep);
     
     
-    public void excluir(Endereco2 endereco);
+    public void excluir(Integer id);
 
 }

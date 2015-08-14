@@ -11,9 +11,21 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="cep" />
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages</value>
+		</property>
+		<property name="suffix">
+			<value>.html</value>
+		</property>
+	</bean>
+ 
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
- 
+	
+	
 	<mvc:annotation-driven />
 	
 </beans>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br"  ng-app="cepApp">
+<head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Cadastro de Cep</title>
+
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="css/style.css" rel="stylesheet">
+ <script src="js/angular.min.js"></script>
+ <script src="js/cepApp.js"></script>
+  <script src="js/jquery-1.11.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  
+<base href="/cep">
+</head>
+<body  ng-controller="listaController as listaCtrl">
+
+ <div id="main" class="container-fluid" style="margin-top: 50px">
+ 
+ 	<div id="top" class="row">
+		<div class="col-sm-3">
+			<h2>Endereco</h2>
+		</div>
+		<div class="col-sm-6">
+		 <form ng-submit="listaCtrl.search()" > 
+			<div class="input-group h2">
+				<input name="data[search]" class="form-control" id="idpesquisarCep" type="text" placeholder="Pesquisar Cep" ng-model="listaCtrl.searchText">
+				<span class="input-group-btn">
+					<button class="btn btn-primary" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+			</form>
+		</div>
+		<div class="col-sm-3">
+			<a href="/cep/editarcep.html" class="btn btn-primary pull-right h2">Novo Endereco</a>
+		</div>
+	</div> <!-- /#top -->
+ 
+ 
+ 	<hr />
+ 	<div id="list" class="row">
+	
+	<div class="table-responsive col-md-12">
+		<table class="table table-striped" >
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Cep</th>
+					<th>Logradouro</th>
+					<th>Bairro</th>
+					<th>Cidade</th>
+					<th>Estado</th>
+					<th class="actions">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="registro in  listaCtrl.registros">
+					<td>{{ registro.id }}</td>
+					<td>{{ registro.cep }}</td>
+					<td>{{ registro.logradouro }}</td>
+					<td>{{ registro.bairro }}</td>
+					<td>{{ registro.cidade }}</td>
+					<td>{{ registro.estado }}</td>
+					<td class="actions">
+						<a class="btn btn-warning btn-xs" href="/cep/editarcep.html?cep={{registro.cep}}">Editar</a>
+						
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	
+	</div> 
+</div>
+
+
+</body>
+</html>
